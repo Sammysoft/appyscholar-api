@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const _connectDB = async () => {
   try {
     dotenv.config();
-    const MongoURL = process.env.MONGO_LOCAL;
+    const MongoURL = process.env.MONGO_ATLAS;
     await mongoose.connect(MongoURL, { useNewUrlParser: true }).then(() => {
       console.log("Connected to Database");
     });
