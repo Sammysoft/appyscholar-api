@@ -23,4 +23,6 @@ staffRouter.get(
   }
 );
 
+staffRouter.post("/batch-transition", staffRoute._batchTransition);
+
 export default staffRouter;

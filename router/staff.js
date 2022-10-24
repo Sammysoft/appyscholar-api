@@ -1,6 +1,7 @@
 import Staff from "../models/staff-model.js";
 import bcrypt from "bcrypt";
 import { sendMail } from "../config/mail-service.js";
+import Student from "../models/students-model.js";
 
 export const staffRoute = {
   _addStaff: async (req, res, next) => {
@@ -117,6 +118,41 @@ export const staffRoute = {
     } catch (error) {
       res.status(400).json({
         data: "Staffs could not be fetched!",
+      });
+    }
+  },
+
+  _batchTransition: async (req, res, next) => {
+    try {
+      const seniorThree = await Student.updateMany(
+        { studentClass: "Sss Three" },
+        { $set: { studentClass: "Alumni" } }
+      );
+      const seniorTwo = await Student.updateMany(
+        { studentClass: "Sss Two" },
+        { $set: { studentClass: "Sss Three" } }
+      );
+      const seniorOne = await Student.updateMany(
+        { studentClass: "Sss One" },
+        { $set: { studentClass: "Sss Two" } }
+      );
+      const juniorThree = await Student.updateMany(
+        { studentClass: "Jss Three" },
+        { $set: { studentClass: "Sss One" } }
+      );
+      const juniorTwo = await Student.updateMany(
+        { studentClass: "Jss Two" },
+        { $set: { studentClass: "Jss Three" } }
+      );
+      const juniorOne = await Student.updateMany(
+        { studentClass: "Jss One" },
+        { $set: { studentClass: "Jss Two" } }
+      );
+
+      res.status(200).json({ data: "Student's successfully transited!." });
+    } catch (error) {
+      res.status(400).json({
+        msg: "Error updating students into the new session",
       });
     }
   },
