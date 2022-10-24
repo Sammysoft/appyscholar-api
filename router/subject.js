@@ -1,5 +1,6 @@
 import Subject from "../models/subject-model.js";
 import StaffSubject from "../models/staff-subject-model.js";
+import Term from "../models/term-model.js";
 
 export const subjectRoute = {
   _addSubjects: async (req, res, next) => {
@@ -7,8 +8,11 @@ export const subjectRoute = {
       let myArray = [];
       const { lastname, firstname, subjects, studentID, studentClass } =
         req.body;
+      const term = await Term.findOne();
+      console.log(term);
       subjects.selectedSubjects.map(async (sub) => {
         const oneSubject = await new Subject();
+        oneSubject.term = `${term.currterm} Term ${term.year}`;
         oneSubject.text = sub;
         oneSubject.studentClass = studentClass;
         oneSubject.studentID = studentID;
@@ -58,11 +62,11 @@ export const subjectRoute = {
 
   _getSubjects: async (req, res, next) => {
     try {
-      const { studentname, text } = req.body;
+      const { studentname, term } = req.body;
       console.log(studentname);
       const subject = await Subject.find({
         studentname: studentname,
-        // text: text
+        term: term,
       });
       console.log(subject);
       res.status(200).json({
@@ -77,15 +81,8 @@ export const subjectRoute = {
 
   _addScores: async (req, res, next) => {
     try {
-      const {
-        studentID,
-        subject,
-        firstCA,
-        secondCA,
-        exam,
-        total,
-        studentname,
-      } = req.body;
+      const { term, subject, firstCA, secondCA, exam, total, studentname } =
+        req.body;
 
       let studentSubject = subject.split(" ")[0];
       let studentClass =
@@ -104,6 +101,7 @@ export const subjectRoute = {
       let scores = await Subject.findOne({
         studentname: studentname,
         text: studentSubject,
+        term: term,
       });
 
       if (!scores) {
@@ -123,10 +121,13 @@ export const subjectRoute = {
     let studentSubject = value.split(" ")[0];
     let studentClass =
       value.split(" ")[1].slice(1) + " " + value.split(" ")[2].slice(0, -1);
+
+    const term = await Term.findOne();
     try {
       const classStudents = await Subject.find({
         text: studentSubject,
         studentClass: studentClass,
+        term: `${term.currterm} Term ${term.year}`,
       });
       res.status(200).json({
         data: classStudents,

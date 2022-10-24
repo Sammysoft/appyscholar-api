@@ -22,7 +22,7 @@ export const termRoute = {
   },
   _getTerm: async (req, res, next) => {
     try {
-      const term = Term.findOne();
+      const term = await Term.findOne();
       if (term) {
         res.status(200).json({
           data: term,

@@ -95,9 +95,11 @@ export const studentRoute = {
   _getStudentInAClass: async (req, res, next) => {
     const { data } = req.body;
     console.log(data);
+    const term = await Term.findOne();
     try {
       const subject = await Subject.find({
         studentClass: data,
+        term:`${term.currterm} Term ${term.year}`
       });
       const students = await Student.find({ studentClass: data });
       if (students) {
