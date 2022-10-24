@@ -51,10 +51,20 @@ export const studentRoute = {
   },
 
   _getStudents: async (req, res, next) => {
-    const allStudents = await Student.find();
+    const JssOneStudents = await Student.find({ studentClass: "Jss One" });
+    const JssTwoStudents = await Student.find({ studentClass: "Jss Two" });
+    const JssThreeStudents = await Student.find({ studentClass: "Jss Three" });
+    const SssOneStudents = await Student.find({ studentClass: "Sss One" });
+    const SssTwoStudents = await Student.find({ studentClass: "Sss Two" });
+    const SssThreeStudents = await Student.find({ studentClass: "Sss Three" });
     try {
       res.status(200).json({
-        data: allStudents,
+        JssOneStudents: JssOneStudents,
+        JssTwoStudents: JssTwoStudents,
+        JssThreeStudents: JssThreeStudents,
+        SssOneStudents: SssOneStudents,
+        SssTwoStudents: SssTwoStudents,
+        SssThreeStudents: SssThreeStudents,
       });
     } catch (error) {
       res.status(400).json({
@@ -99,7 +109,7 @@ export const studentRoute = {
     try {
       const subject = await Subject.find({
         studentClass: data,
-        term:`${term.currterm} Term ${term.year}`
+        term: `${term.currterm} Term ${term.year}`,
       });
       const students = await Student.find({ studentClass: data });
       if (students) {
