@@ -156,4 +156,18 @@ export const staffRoute = {
       });
     }
   },
+
+  _deleteStaff: async (req, res, next) => {
+    try {
+      Staff.findByIdAndDelete(req.params.id, (err) => {
+        res
+          .status(200)
+          .json({ data: "You just deleted a registered account!" });
+      });
+    } catch (error) {
+      res
+        .status(400)
+        .json({ msg: "Internal Server Error, please contact support" });
+    }
+  },
 };

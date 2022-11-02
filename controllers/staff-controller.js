@@ -24,5 +24,6 @@ staffRouter.get(
 );
 
 staffRouter.post("/batch-transition", staffRoute._batchTransition);
+staffRouter.post("/delete/:id", staffRoute._deleteStaff);
 
 export default staffRouter;
