@@ -162,7 +162,7 @@ export const staffRoute = {
       Staff.findByIdAndDelete(req.params.id, (err) => {
         res
           .status(200)
-          .json({ data: "You just deleted a registered account!" });
+          .json({ msg: "You just deleted a registered staff account!" });
       });
     } catch (error) {
       res
