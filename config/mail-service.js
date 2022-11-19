@@ -1,12 +1,47 @@
-import nodemailer from "nodemailer";
+import nodemailer from "nodemailer";"use strict";
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.mailgun.org",
-  port: 587,
+
+// async function main() {
+
+// let transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//       user: 'oladelegroupofschools@gmail.com',
+//       pass: 'zvqjcnxtoriplwhk'
+//   }
+// });
+
+
+
+
+// let info = await transporter.sendMail({
+//   from: '"Fred Foo 👻" <dareowonibisamuel@gmail.com>', // sender address
+//   to: "dareowonibisamuel@gmail.com, samuelbibilade@gmail.com", // list of receivers
+//   subject: "Hello ✔", // Subject line
+//   text: "Hello world?", // plain text body
+//   html: "<b>Hello world?</b>", // html body
+// });
+// ''
+// console.log("Message sent: %s", info.messageId);
+// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+// Preview only available when sending through an Ethereal account
+// console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+// }
+
+// main().catch(console.error);
+
+
+
+
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
   auth: {
-    user: "postmaster@results.oladelegroupofschools.com",
-    pass: "58faeb2f856351d72c232474d7894569-18e06deb-a6f0bb78",
-  },
+      user: 'oladelegroupofschools@gmail.com',
+      pass: 'zvqjcnxtoriplwhk'
+  }
 });
 
 export const sendMail = (
