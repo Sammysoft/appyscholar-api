@@ -180,8 +180,10 @@ export const studentRoute = {
     try {
       const student = await Student.findById({ _id: req.params.id });
       const term = await Term.findOne();
+      const termQuery = `${term.currterm} Term ${term.year}`
       const scores = await Subject.find({
         studentname: `${student.firstname} ${student.lastname}`,
+        term: termQuery
       });
       res.status(200).json({
         student,
